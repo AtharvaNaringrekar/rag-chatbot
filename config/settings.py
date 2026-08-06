@@ -33,7 +33,7 @@ class Settings(BaseSettings):
 
     # Ollama LLM settings
     OLLAMA_BASE_URL: str = Field(default="http://127.0.0.1:11434", description="Ollama API base URL")
-    LLM_MODEL: str = Field(default="phi3:mini", description="Name of the LLM model configured in Ollama")
+    LLM_MODEL: str = Field(default="qwen2.5:1.5b", description="Name of the LLM model configured in Ollama")
     LLM_TEMPERATURE: float = Field(default=0.0, description="Temperature for response generation (0.0 for deterministic answers)")
 
     # Embedding settings
