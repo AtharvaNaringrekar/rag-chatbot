@@ -48,7 +48,7 @@ class TestRAGPipeline(unittest.TestCase):
 
         # Assert correct workflow orchestration calls
         self.mock_embed.embed_query.assert_called_once_with("What is the port?")
-        self.mock_vs.similarity_search.assert_called_once_with([0.2] * 384, limit=3)
+        self.mock_vs.similarity_search.assert_called_once_with([0.2] * 384, limit=30)
         self.mock_llm.generate_response.assert_called_once()
 
         # Assert response schema structures

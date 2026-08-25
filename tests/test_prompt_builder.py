@@ -47,9 +47,15 @@ class TestPromptBuilder(unittest.TestCase):
         formatted = format_context([chunk1, chunk2])
 
         # Assert format includes descriptors
-        self.assertIn("--- Context Block 1 [Source: api_spec.json, Endpoint: GET /products] ---", formatted)
+        self.assertIn("--- Document Segment 1 ---", formatted)
+        self.assertIn("Source: api_spec.json", formatted)
+        self.assertIn("Path: /products", formatted)
+        self.assertIn("HTTP Method: GET", formatted)
         self.assertIn("Get products returns 200.", formatted)
-        self.assertIn("--- Context Block 2 [Source: manual.pdf, Page: 4, Section: Setup] ---", formatted)
+        self.assertIn("--- Document Segment 2 ---", formatted)
+        self.assertIn("Source: manual.pdf", formatted)
+        self.assertIn("Page: 4", formatted)
+        self.assertIn("Section: Setup", formatted)
         self.assertIn("Check configuration values.", formatted)
 
     def test_render_user_prompt(self):
@@ -70,17 +76,17 @@ class TestPromptBuilder(unittest.TestCase):
 
         self.assertIn("### TECHNICAL DOCUMENTATION CONTEXT:", prompt)
         self.assertIn("Retrieve token.", prompt)
-        self.assertIn("### USER QUESTION:\nHow to log in?", prompt)
+        self.assertIn("TARGET QUESTION: How to log in?", prompt)
 
     def test_system_prompt_constraints(self):
         """
         Verify the system prompt contains the strict fallback phrase constraint.
         """
         self.assertIn(
-            "I couldn't find that information in the uploaded documentation.",
+            "I could not find this information in the available Spintly documentation.",
             SYSTEM_PROMPT
         )
-        self.assertIn("Answer the user query using ONLY", SYSTEM_PROMPT)
+        self.assertIn("Answer the user's question using ONLY", SYSTEM_PROMPT)
 
 
 if __name__ == "__main__":
